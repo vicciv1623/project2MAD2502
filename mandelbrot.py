@@ -1,3 +1,5 @@
+import numpy as np
+
 def get_escape_time(c:complex, max_iterations:int) -> int | None:
   """
   Returns the number of iterations before the complex number following the
