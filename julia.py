@@ -19,6 +19,26 @@ def get_julia(c:complex, max_iterations:int, z:complex) -> int | None:
       return i+1
   return None
 
+def get_complex_grid(top_left:complex, bottom_right:complex, step:float) -> np.ndarray:
+  """returns a grid of complex numbers as coordinates, each by a distance of [step]
+
+  input: top_left which is the "beginning" complex number that will located in the top left corner
+         bottom_right: which is a complex that specifies the end points of the grid laterally and longitudinally
+         step: which is an int that indicates the length of a unit within the grid
+  output: an ndarray with complex numbers distanced by a specific distance (step)"""
+  width_dist = bottom_right.real - top_left.real
+  height_dist = top_left.imag - bottom_right.imag
+
+  width = int(width_dist // step)    #how many units there will be in the grid width-wise
+  height = int(height_dist // step)  #how many units there will be in the grid height-wise
+
+  width_side = np.arange(0,width*step+step, step)  #measuring out distances between each unit
+  height_side = np.arange(0,height*step+step, step, dtype="complex128")  #measuring out distances between each unit
+  height_side *= complex(0,-1)  #height wise, decreases by j from top to bottom 
+
+  grid = width_side + height_side.reshape(height+1,1)
+  grid += top_left
+  return grid
 
 def get_julia_color_arr(z_arr: np.ndarray, c:complex, max_iterations: int) -> np.ndarray:
   """returns an nd array with float values pertaining to the escape values of each point in z_arr for a given complex number c
