@@ -38,7 +38,7 @@ def get_complex_grid(top_left:complex, bottom_right:complex, step:float) -> np.n
   return grid
 
 def get_escape_time_color_arr(c_arr: np.ndarray, max_iterations: int) -> np.ndarray:
-  """"returns an nd array with float values pertaining to the escape values of c_arr
+  """returns an nd array with float values pertaining to the escape values of c_arr
   input: c_arr which is the complex number grid used to generate mandelbrot image
          max_iterations is the int parameter used for calculating the escape time
   output: ndarray which holds the float values which when converted to gray scale will generate
