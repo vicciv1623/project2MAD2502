@@ -28,12 +28,12 @@ def get_complex_grid(top_left:complex, bottom_right:complex, step:float) -> np.n
   width_dist = bottom_right.real - top_left.real
   height_dist = top_left.imag - bottom_right.imag
 
-  width = int(width_dist // step)
-  height = int(height_dist // step)
+  width = int(width_dist // step)    #how many units there will be in the grid width-wise
+  height = int(height_dist // step)  #how many units there will be in the grid height-wise
 
-  width_side = np.arange(0,width*step+step, step)
-  height_side = np.arange(0,height*step+step, step, dtype="complex128")
-  height_side *= complex(0,-1)
+  width_side = np.arange(0,width*step+step, step)  #measuring out distances between each unit
+  height_side = np.arange(0,height*step+step, step, dtype="complex128")  #measuring out distances between each unit
+  height_side *= complex(0,-1)  #height wise, decreases by j from top to bottom 
 
   grid = width_side + height_side.reshape(height+1,1)
   grid += top_left
@@ -46,12 +46,12 @@ def get_escape_time_color_arr(c_arr: np.ndarray, max_iterations: int) -> np.ndar
   output: ndarray which holds the float values which when converted to gray scale will generate
           a mandelbrot image"""
   whole_grid = np.zeros(c_arr.shape)
-  z=np.zeros(c_arr.shape,dtype=complex)
+  z=np.zeros(c_arr.shape,dtype=complex)   #beginning of sequence
   not_escaped=np.ones(c_arr.shape,dtype=bool)
   for i in range(max_iterations):
       z[not_escaped] = z[not_escaped]**2 + c_arr[not_escaped]
       if_escaped = (np.abs(z) > 2) & not_escaped
-      whole_grid[if_escaped] = i + 1
+      whole_grid[if_escaped] = i + 1        #updating grid where it escapes
       not_escaped = not_escaped & (if_escaped == False)
   whole_grid[not_escaped] = max_iterations + 1
   color_grid = (max_iterations - whole_grid + 1) / (max_iterations + 1)
