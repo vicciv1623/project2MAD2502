@@ -28,10 +28,8 @@ def get_complex_grid(top_left:complex, bottom_right:complex, step:float) -> np.n
             step: which is an int that indicates the length of a unit within the grid
     output: an ndarray with complex numbers distanced by a specific distance (step)"""
     x = int((top_left.imag - bottom_right.imag) / step) #width of grid
-    y = int((bottom_right.real - top_left.real) / step)    #height of grid
+    y = int((bottom_right.real - top_left.real) / step) #height of grid
 
-
-  
 
     width_side = np.arange(0,x*step+step, step)  #measuring out distances between each unit
     height_side = np.arange(0,y*step+step, step, dtype="complex128")  #measuring out distances between each unit
