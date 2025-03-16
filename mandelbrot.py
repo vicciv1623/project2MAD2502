@@ -9,35 +9,39 @@ def get_escape_time(c:complex, max_iterations:int) -> int | None:
   Output: int value for number of iterations until complex number magnituded is greater than 2 or
             None if magnitude is lower or equal to 2 even after completing max_iterations
   """
-  z=c
-  if abs(z) > 2:
-    return 0
-  for i in range(max_iterations):
-    z=z**2 + c
-    if abs(z) > 2:
-      return i+1
-  return None
+  if abs(c) > 2:
+      return 0
+  else:
+    z_variable=c
+    for i in range(max_iterations):
+      z_variable = z_variable ** 2 + c
+      if abs(z_variable) > 2:
+        return i+1
+    return None
+
   
 def get_complex_grid(top_left:complex, bottom_right:complex, step:float) -> np.ndarray:
-  """returns a grid of complex numbers as coordinates, each by a distance of [step]
+    """returns a grid of complex numbers as coordinates, each by a distance of [step]
 
-  input: top_left which is the "beginning" complex number that will located in the top left corner
-         bottom_right: which is a complex that specifies the end points of the grid laterally and longitudinally
-         step: which is an int that indicates the length of a unit within the grid
-  output: an ndarray with complex numbers distanced by a specific distance (step)"""
-  width_dist = bottom_right.real - top_left.real
-  height_dist = top_left.imag - bottom_right.imag
+    input: top_left which is the "beginning" complex number that will located in the top left corner
+            bottom_right: which is a complex that specifies the end points of the grid laterally and longitudinally
+            step: which is an int that indicates the length of a unit within the grid
+    output: an ndarray with complex numbers distanced by a specific distance (step)"""
+    x = int((top_left.imag - bottom_right.imag) / step) #width of grid
+    y = int((bottom_right.real - top_left.real) / step)    #height of grid
 
-  width = int(width_dist // step)    #how many units there will be in the grid width-wise
-  height = int(height_dist // step)  #how many units there will be in the grid height-wise
 
-  width_side = np.arange(0,width*step+step, step)  #measuring out distances between each unit
-  height_side = np.arange(0,height*step+step, step, dtype="complex128")  #measuring out distances between each unit
-  height_side *= complex(0,-1)  #height wise, decreases by j from top to bottom 
+  
 
-  grid = width_side + height_side.reshape(height+1,1)
-  grid += top_left
-  return grid
+    width_side = np.arange(0,x*step+step, step)  #measuring out distances between each unit
+    height_side = np.arange(0,y*step+step, step, dtype="complex128")  #measuring out distances between each unit
+    
+    height_side *= complex(0,-1)  #height wise, decreases by j from top to bottom 
+
+    grid = width_side + height_side.reshape(y+1,1)
+    grid += top_left
+    
+    return grid
 
 def get_escape_time_color_arr(c_arr: np.ndarray, max_iterations: int) -> np.ndarray:
   """returns an nd array with float values pertaining to the escape values of c_arr
