@@ -16,7 +16,7 @@ def get_escape_time(c:complex, max_iterations:int) -> int | None:
     for i in range(max_iterations):
       z_variable = z_variable ** 2 + c  #uses recursive function z(n) = (z(n-1))^2 + c
       if abs(z_variable) > 2:
-        return i+1
+        return i+1#because i is an index, we need to add one so that it gives up the amount of iterations
     return None
 
   
